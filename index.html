@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <title>Comtest</title>
+
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+
+
+    <style>
+        body {
+            padding: 15px;
+        }
+
+        .inline {
+          display: inline;
+        }
+
+        .full-width {
+          width: 100%;
+        }
+    </style>
+
+</head>
+
+<body ng-app="myApp" ng-controller="myCtrl">
+
+    <div class="row">
+        <div class="col-xs-12">
+            <h4 class="inline">Select a comport:</h4>
+            <select class="inline" ng-model="currentCom" class="">
+                <option ng-repeat="port in ports" value="{{port.comName}}">
+                    {{port.manufacturer}} : {{port.comName}}
+                </option>
+            </select>
+            <button class="btn btn-primary" ng-click="connect()">Connect</button>
+            <br>
+            <br>
+        </div>
+
+        <div class="col-xs-12">
+            <textarea class="form-control" style="width:100%; height:400px;" ng-model="recieved"></textarea>
+            <br>
+        </div>
+
+        <div class="col-xs-10">
+            <form ng-submit="send()">
+              <input class="form-control" type="input" ng-model="message">
+            </form>
+        </div>
+        <div class="col-xs-2"><button class="btn btn-primary full-width" ng-click="send()">Send</button></div>
+    </div>
+</body>
+
+
+<script>
+    global.jQuery = require('jquery');
+</script>
+<script src="node_modules/angular/angular.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+
+<script>
+    var app = angular.module('myApp', []);
+    var SerialPort = require('serialport');
+
+    app.controller('myCtrl', function($scope) {
+        $scope.ports = [];
+        $scope.port = {};
+        $scope.portname = "sdf";
+
+        $scope.connect = function() {
+            console.log($scope.currentCom);
+            $scope.port = new SerialPort($scope.currentCom);
+            $scope.recieved = "";
+
+            $scope.port.on('open', function() {
+              $scope.recieved += "Connected to: " + $scope.currentCom + "\r";
+              $scope.$apply();
+
+            });
+
+            // open errors will be emitted as an error event
+            $scope.port.on('error', function(err) {
+                console.log('Error: ', err.message);
+            })
+
+            $scope.port.on('data', function(data) {
+                $scope.recieved += data;
+                $scope.$apply();
+            });
+        }
+
+        $scope.send = function() {
+            $scope.port.write($scope.message + '\r', function(err) {
+                if (err) {
+                    return console.log('Error on write: ', err.message);
+                }
+                console.log('message written');
+            });
+        };
+
+
+        $scope.init = function() {
+            SerialPort.list($scope.initPorts);
+        }
+
+        $scope.initPorts = function(err, ports) {
+            $scope.ports = ports;
+
+            $scope.$apply();
+
+
+            console.log(ports);
+        }
+
+        $scope.init();
+    });
+</script>
+
+</html>
