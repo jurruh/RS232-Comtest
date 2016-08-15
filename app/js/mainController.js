@@ -22,15 +22,15 @@ app.controller('mainController', function($scope) {
         $scope.port.on('data', function(data) {
             $scope.recieved += data;
             $scope.$apply();
+            document.getElementById("recievedField").scrollTop = document.getElementById("recievedField").scrollHeight
         });
     }
 
     $scope.send = function() {
         $scope.port.write($scope.message + '\r', function(err) {
             if (err) {
-                return console.log('Error on write: ', err.message);
+                $scope.recieved += 'Error on write: ' + err.message + "\n";
             }
-            console.log('message written');
         });
     };
 

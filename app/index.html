@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <title>Comtest</title>
 
-    <link rel="stylesheet" href="../node_modules/bootstrap/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="node_modules/bootstrap/dist/css/bootstrap.min.css">
 
     <style>
         body {
@@ -18,6 +18,11 @@
 
         .full-width {
           width: 100%;
+        }
+
+        #recievedField {
+          width:100%;
+          height:calc(100vh - 150px);
         }
     </style>
 
@@ -38,7 +43,7 @@
         </div>
 
         <div class="col-xs-12">
-            <textarea class="form-control" style="width:100%; height:400px;" ng-model="recieved"></textarea>
+            <textarea class="form-control" id="recievedField" ng-model="recieved"></textarea>
             <br>
         </div>
 
@@ -55,8 +60,8 @@
 <script>
     global.jQuery = require('jquery');
 </script>
-<script src="../node_modules/angular/angular.js"></script>
-<script src="../node_modules/bootstrap/dist/js/bootstrap.min.js"></script>
+<script src="node_modules/angular/angular.js"></script>
+<script src="node_modules/bootstrap/dist/js/bootstrap.min.js"></script>
 <script src="js/index.js"></script>
 <script src="js/mainController.js"></script>
 </html>

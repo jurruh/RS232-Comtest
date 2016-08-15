@@ -1,7 +1,15 @@
 {
-    "name": "RS232-Comtest",
-    "description": "Comtest for RS232",
-    "version": "1.0.0",
-    "author": "Jurre Vriesen <info@jurrevriesen.nl>",
-    "main": "main.js"
+  "name": "RS232-Comtest",
+  "description": "Comtest for RS232",
+  "version": "1.0.0",
+  "author": "Jurre Vriesen <info@jurrevriesen.nl>",
+  "main": "main.js",
+  "dependencies": {
+    "angular": "^1.5.8",
+    "angularjs": "0.0.1",
+    "bootstrap": "^3.3.7",
+    "electron-squirrel-startup": "^1.0.0",
+    "jquery": "^3.1.0",
+    "serialport": "^4.0.1"
+  }
 }

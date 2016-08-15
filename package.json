@@ -33,16 +33,11 @@
         "electron-rebuild": "^1.2.0",
         "electron-winstaller": "^2.3.4"
     },
-    "dependencies": {
-        "angular": "^1.5.8",
-        "angularjs": "0.0.1",
-        "bootstrap": "^3.3.7",
-        "jquery": "^3.1.0",
-        "serialport": "^4.0.1"
-    },
     "build": {
         "appId": "comtest.dorset",
-        "category": "comtest.dorset.nu"
+        "category": "comtest.dorset.nu",
+        "win": {
+            "iconUrl": "https://eatodo.s3.amazonaws.com/icon.ico"
+        }
     }
-
 }
