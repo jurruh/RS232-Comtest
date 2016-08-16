@@ -6,25 +6,8 @@
     <title>Comtest</title>
 
     <link rel="stylesheet" href="node_modules/bootstrap/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="css/style.css">
 
-    <style>
-        body {
-            padding: 15px;
-        }
-
-        .inline {
-          display: inline;
-        }
-
-        .full-width {
-          width: 100%;
-        }
-
-        #recievedField {
-          width:100%;
-          height:calc(100vh - 150px);
-        }
-    </style>
 
 </head>
 
@@ -37,7 +20,8 @@
                     {{port.manufacturer}} : {{port.comName}}
                 </option>
             </select>
-            <button class="btn btn-primary" ng-click="connect()">Connect</button>
+            <input type="number" ng-model="baudRate">
+            <button class="btn btn-warning" ng-click="refresh()">Refresh</button> <button class="btn btn-primary" ng-click="connect()">Connect</button>
             <br>
             <br>
         </div>

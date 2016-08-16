@@ -1,0 +1,20 @@
+body {
+    padding: 15px;
+}
+
+.inline {
+  display: inline;
+}
+
+.full-width {
+  width: 100%;
+}
+
+#recievedField {
+  width:100%;
+  height:calc(100vh - 150px);
+}
+
+select {
+  padding:3.3px;
+}

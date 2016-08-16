@@ -1,15 +1,17 @@
 app.controller('mainController', function($scope) {
     $scope.ports = [];
     $scope.port = {};
-    $scope.portname = "sdf";
+    $scope.portname = "";
+    $scope.baudRate = 19200;
 
     $scope.connect = function() {
-        console.log($scope.currentCom);
-        $scope.port = new SerialPort($scope.currentCom);
+        $scope.port = new SerialPort($scope.currentCom, {
+          baudRate : $scope.baudRate
+        });
         $scope.recieved = "";
 
         $scope.port.on('open', function() {
-          $scope.recieved += "Connected to: " + $scope.currentCom + "\r";
+          $scope.writeLog("Connected to: " + $scope.currentCom);
           $scope.$apply();
 
         });
@@ -26,26 +28,31 @@ app.controller('mainController', function($scope) {
         });
     }
 
+    $scope.writeLog = function(str){
+        $scope.recieved += str + "\r";
+        $scope.$apply();
+    }
+
+    $scope.refresh = function(){
+      SerialPort.list($scope.initPorts);
+    }
+
     $scope.send = function() {
         $scope.port.write($scope.message + '\r', function(err) {
             if (err) {
-                $scope.recieved += 'Error on write: ' + err.message + "\n";
+                $scope.writeLog("Error on write " + err);
             }
         });
     };
 
-
     $scope.init = function() {
-        SerialPort.list($scope.initPorts);
+      $scope.refresh();
     }
 
     $scope.initPorts = function(err, ports) {
         $scope.ports = ports;
 
         $scope.$apply();
-
-
-        console.log(ports);
     }
 
     $scope.init();
